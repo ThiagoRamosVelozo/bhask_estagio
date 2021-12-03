@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="https://pt.calcuworld.com/wp-content/uploads/sites/6/2019/07/calculadora-cientifica.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Bháskara</title>
+    <link rel="stylesheet" href="estilos/st.css" />
+  </head>
+
+  <body>
+    <script>
+      function mask(n) {
+        var c = n.value;
+
+        if (isNaN(c[c.length - 1]) && "," != c[c.length - 1] && "-" != c[c.length - 1]) {
+
+          n.value = c.substring(0, c.length - 1);
+          return;
+
+        }
+
+      }
+
+      function cal() {
+        var a = document.querySelector("#val_a").value.replace(",", "."),
+          b = document.querySelector("#val_b").value.replace(",", "."),
+          c = document.querySelector("#val_c").value.replace(",", ".");
+
+        if (!a.trim().length) {
+          window.alert('Campo "a" está vazio!');
+          return;
+        } else if (!b.trim().length) {
+          window.alert('Campo "b" está vazio!');
+          return;
+        } else if (!c.trim().length) {
+          window.alert('Campo "c" está vazio!');
+          return;
+        }
+
+        if (isNaN(a[a.length - 1])){
+          window.alert('Campo "a" não é numérico!');
+          return;
+        } else if (isNaN(b[b.length - 1])){
+          window.alert('Campo "b" não é numérico!');
+          return;
+        } else if (isNaN(c[c.length - 1])){
+          window.alert('Campo "c" não é numérico!');
+          return;
+        }
+
+        var converte_a = parseFloat(a),
+          converte_b = parseFloat(b),
+          converte_c = parseFloat(c);
+
+        if (converte_a == 0) {
+          window.alert('"a" deve ser diferente de 0!');
+          return;
+        }
+
+        var delta = converte_b * converte_b - 4 * converte_a * converte_c,
+          p0 = parseFloat(-converte_b / (converte_a * 2)).toFixed(2);
+
+        aviso = window.document.querySelector("#aviso").value;
+
+        if (delta < 0) {
+          delta *= -1;
+
+          if(p0 == 0){
+            p0 = ""
+          }
+
+          var deltarad = Math.sqrt(delta) / (converte_a * 2)
+
+          document.querySelector("#res1").innerHTML =
+            p0 +
+            (deltarad>0 && p0!=""?"+":"")+
+            parseFloat(deltarad).toFixed(2) +
+            "i";
+          document.querySelector("#res2").innerHTML =
+            p0 +
+            (-deltarad>0 && p0!=""?"+":"")+
+            parseFloat(-deltarad).toFixed(2) +
+            "i";
+
+        } else {
+          document.querySelector("#res1").innerHTML = parseFloat(
+            (-converte_b + Math.sqrt(delta)) / (converte_a * 2)
+          ).toFixed(2);
+          document.querySelector("#res2").innerHTML = parseFloat(
+            (-converte_b - Math.sqrt(delta)) / (converte_a * 2)
+          ).toFixed(2);
+        }
+      }
+    </script>
+
+    <div class="centralizado titulo">
+      <h1>Calculadora de Bháskara</h1>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <fieldset>
+            <div class="centralizado marg">
+              <label for="val_a">a:</label
+              ><input
+                oninput="mask(this)"
+                type="text"
+                maxlength="3"
+                id="val_a"
+              />
+              <label for="val_b">b:</label
+              ><input
+                oninput="mask(this)"
+                type="text"
+                maxlength="3"
+                id="val_b"
+              />
+              <label for="val_c">c:</label
+              ><input
+                oninput="mask(this)"
+                type="text"
+                maxlength="3"
+                id="val_c"
+              />
+            </div>
+
+            <div class="centralizado">
+              <button onclick="cal()" class="btn btn-danger">Calcular</button>
+            </div>
+
+            <div class="container">
+              <div class="row centralizado">
+                <h4 class="col-lg-5 col-sm-12" id="res1">X<sub>1</sub></h4>
+                <h4 class="col-lg-5 col-sm-12" id="res2">X<sub>2</sub></h4>
+              </div>
+            </div>
+
+            <div class="centralizado youtube-video">
+              <iframe
+                width="280"
+                height="157"
+                src="https://www.youtube.com/embed/nTkRBHi6qi0"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <p id="aviso"></p>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <div class="inferior">
+      <p>Por Thiago Ramos Velozo</p>
+    </div>
+  </body>
+</html>
